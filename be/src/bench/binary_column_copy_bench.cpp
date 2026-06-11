@@ -100,7 +100,7 @@ std::string BinaryColumnCopyBench::_rand_str() {
 
     int length = _rand() % 32 + 1;
 
-    for (int j = 0; j < length; j++) {
+    for (int j1 = 0; j1 < length; j1++) {
         tmp = _rand() % 26;
         tmp += 'A';
         str += tmp;
