@@ -54,7 +54,7 @@ public:
                     }
                     copy_count_column->append(offset);
                 } else {
-                    if (offset_column->get(row_idx + 1).get_int32() == offset_column->get(row_idx).get_int32() &&
+                    if (offset_column->get(row_idx + 1).get_uint32() == offset_column->get(row_idx).get_uint32() &&
                         state->get_is_left_join()) {
                         // to support unnest with null.
                         if (state->is_required()) {
@@ -62,11 +62,11 @@ public:
                         }
                         offset += 1;
                     } else {
-                        auto length =
-                                offset_column->get(row_idx + 1).get_int32() - offset_column->get(row_idx).get_int32();
+                        uint32_t length =
+                                offset_column->get(row_idx + 1).get_uint32() - offset_column->get(row_idx).get_uint32();
                         if (state->is_required()) {
                             unnested_array_elements->append(*(col_array->elements_column()),
-                                                            offset_column->get(row_idx).get_int32(), length);
+                                                            offset_column->get(row_idx).get_uint32(), length);
                         }
                         offset += length;
                     }

@@ -60,8 +60,8 @@ public:
                 auto* col_array = down_cast<ArrayColumn*>(ColumnHelper::get_data_column(column));
                 auto offset_column = col_array->offsets_column();
 
-                long array_element_length =
-                        offset_column->get(row_idx + 1).get_int32() - offset_column->get(row_idx).get_int32();
+                uint32_t array_element_length =
+                        offset_column->get(row_idx + 1).get_uint32() - offset_column->get(row_idx).get_uint32();
                 if (array_element_length > max_length_array_size) {
                     max_length_array_size = array_element_length;
                 }
@@ -86,10 +86,10 @@ public:
                         // current row is null, ignore element data.
                         unnested_array_list[col_idx]->append_nulls(max_length_array_size);
                     } else {
-                        auto array_element_length =
-                                offset_column->get(row_idx + 1).get_int32() - offset_column->get(row_idx).get_int32();
+                        uint32_t array_element_length =
+                                offset_column->get(row_idx + 1).get_uint32() - offset_column->get(row_idx).get_uint32();
                         unnested_array_list[col_idx]->append(*(col_array->elements_column()),
-                                                             offset_column->get(row_idx).get_int32(),
+                                                             offset_column->get(row_idx).get_uint32(),
                                                              array_element_length);
 
                         if (array_element_length < max_length_array_size) {
